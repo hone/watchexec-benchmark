@@ -11,8 +11,11 @@ impl Handler for BenchmarkHandler {
     fn on_update(&self, ops: &[PathOp]) -> watchexec::error::Result<bool> {
         let start = SystemTime::now();
         for pathop in ops.iter() {
-            let file_modified = std::fs::metadata(&pathop.path).unwrap().modified().unwrap();
-            println!("Duration for {:?}: {:?}", pathop, start.duration_since(file_modified));
+            let metadata = std::fs::metadata(&pathop.path);
+            if let Ok(metadata) = metadata {
+                let file_modified = metadata.modified().unwrap();
+                println!("Duration for {:?}: {:?}", pathop, start.duration_since(file_modified));
+            }
         }
         Ok(true)
     }
