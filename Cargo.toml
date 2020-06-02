@@ -8,5 +8,4 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1.0"
-chrono = "0.4"
 watchexec = "1.12.0"
